@@ -23,10 +23,14 @@ app.post("/items", (req, res) => {
 app.put("/items/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const updatedItem = req.body;
-  items = items.map((item) =>
-    item.id === id ? { ...item, ...updatedItem } : item
-  );
-  res.json(items.find((item) => item.id === id));
+  const index = items.findIndex((item) => item.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Item not found" });
+  }
+
+  items[index] = { ...items[index], ...updatedItem };
+  res.json(items[index]);
 });
 
 app.delete("/items/:id", (req, res) => {
