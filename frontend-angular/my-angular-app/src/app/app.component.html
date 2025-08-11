@@ -1,0 +1,20 @@
+<div>
+  <h1>CRUD App with Angular</h1>
+  <div>
+    <input type="text" [(ngModel)]="newItemName" placeholder="New Item Name" />
+    <button (click)="addItem()">Add Item</button>
+  </div>
+  <ul>
+    <li *ngFor="let item of items">
+      <ng-container *ngIf="editItemId === item.id; else showItemName">
+        <input type="text" [(ngModel)]="editItemName" />
+        <button (click)="updateItem(item.id)">Save</button>
+      </ng-container>
+      <ng-template #showItemName>
+        {{ item.name }}
+        <button (click)="setEditItem(item)">Edit</button>
+      </ng-template>
+      <button (click)="deleteItem(item.id)">Delete</button>
+    </li>
+  </ul>
+</div>
