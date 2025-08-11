@@ -8,13 +8,14 @@ let items = [
   { id: 1, name: "Item 1" },
   { id: 2, name: "Item 2" },
 ];
+let nextId = items.length > 0 ? Math.max(...items.map(item => item.id)) + 1 : 1;
 
 app.get("/items", (req, res) => {
   res.json(items);
 });
 
 app.post("/items", (req, res) => {
-  const newItem = { id: items.length + 1, name: req.body.name };
+  const newItem = { id: nextId++, name: req.body.name };
   items.push(newItem);
   res.status(201).json(newItem);
 });
